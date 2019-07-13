@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+    postgres:
+        image: postgres:latest
+        container_name: "arthemis_core_pg"
+        restart: always
+        volumes:
+            - type: bind 
+              source: "./containers/backend/schema.sql"
+              target: "/docker-entrypoint-initdb.d/schema.sql"
+            - type: bind 
+              source: "./containers/backend/data"
+              target: "/var/lib/postgresql/data"
+        networks:
+            - backend
+        environment:
+            POSTGRES_PASSWORD: myAwesomePassword
+            POSTGRES_DB: arthemis_core
+
+    core:
+        image: arthemismc/core:latest
+        container_name: "arthemis_core"
+        restart: always
+        links: 
+            - postgres
+        volumes:
+            - type: bind 
+              source: "./config.yaml"
+              target: "/app/config.yaml"
+              read_only: true
+        ports:
+            - target: 2020 
+              published: 2020 
+              protocol: tcp
+              mode: host
+        networks:
+            - backend
+        environment:
+            GIN_MODE: release
+            CONFIGURATION_FROM: file:/app/config.yaml    
+networks:
+    backend:
+        driver: bridge
