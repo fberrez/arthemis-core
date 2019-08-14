@@ -1,5 +1,4 @@
 vendor/
 output/
 containers/backend/data
-config.yaml
 .DS_Store

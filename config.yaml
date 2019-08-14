@@ -1,0 +1,10 @@
+- key: database
+  value: >
+        {
+          "db_name": "arthemis_core",
+          "user":"postgres",
+          "password": "myAwesomePassword",
+          "addr": "postgres",
+          "port": 5432,
+          "skip_verify": true,
+        }
