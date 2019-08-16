@@ -1,4 +1,6 @@
 vendor/
 output/
-containers/backend/data
+containers/backend/data/*
 .DS_Store
+
+!containers/backend/data/.gitkeep
